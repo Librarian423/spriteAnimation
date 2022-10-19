@@ -1,0 +1,5 @@
+id,type (0: Texture 1: Font 2: Sound 3: Animation Clip)
+graphics/sprite_sheet.png,0
+animations/Idle.csv,3
+animations/Move.csv,3
+animations/Jump.csv,3
