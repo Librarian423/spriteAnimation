@@ -1,0 +1,11 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+IdleRightDown,1,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FLIPX,FLIPY
+graphics/idle.png,0,80,136,80,68,40,1,0
+graphics/idle.png,136,80,136,80,68,40,1,0
+graphics/idle.png,272,80,136,80,68,40,1,0
+graphics/idle.png,408,80,136,80,68,40,1,0
+graphics/idle.png,544,80,136,80,68,40,1,0
+graphics/idle.png,680,80,136,80,68,40,1,0
+graphics/idle.png,816,80,136,80,68,40,1,0

@@ -7,9 +7,16 @@ public:
 	enum class States
 	{
 		None = -1,
-		Idle,
-		Move,
-		Jump,
+		IdleUp,
+		IdleDown,
+		Run,//Up Down
+		RunTop,
+		RunSide,
+		RunBottom,
+		Attack,//Up Down
+		AttackTop,
+		AttackSide,
+		AttackBottom,
 	};
 
 protected:
@@ -18,6 +25,7 @@ protected:
 	Animator animator;
 
 	States currState;
+	States prevState;
 
 	float speed;
 	Vector2f direction;
@@ -37,11 +45,19 @@ public:
 	void Update(float dt);
 	void Draw(RenderWindow& window);
 
-	void OnCompleteJump();
+	/*void OnCompleteJump();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
-	void UpdateJump(float dt);
+	void UpdateJump(float dt);*/
+	void UpdateIdleUp(float dt);
+	void UpdateIdleDown(float dt);
+
+	void UpdateRun(float dt);
+	void UpdateRunTop(float dt);
+	void UpdateRunSide(float dt);
+	void UpdateRunBottom(float dt);
+
 
 	bool EqualFloat(float a, float b);
 };
