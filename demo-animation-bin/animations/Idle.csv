@@ -1,12 +1,12 @@
-ID,LOOPTYPE (0: Single 1: Move),FPS,,,,
-Idle,1,10,,,,
-,,,,,,
-TEXTURE ID,L,T,W,H,X,Y
-graphics/sprite_sheet.png,0,0,120,120,60,120
-graphics/sprite_sheet.png,120,0,120,120,60,120
-graphics/sprite_sheet.png,240,0,120,120,60,120
-graphics/sprite_sheet.png,360,0,120,120,60,120
-graphics/sprite_sheet.png,480,0,120,120,60,120
-graphics/sprite_sheet.png,600,0,120,120,60,120
-graphics/sprite_sheet.png,720,0,120,120,60,120
-graphics/sprite_sheet.png,840,0,120,120,60,120
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+Idle,1,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FLIPX,FLIPY
+graphics/sprite_sheet.png,0,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,120,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,240,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,360,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,480,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,600,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,720,0,120,120,60,120,0,0
+graphics/sprite_sheet.png,840,0,120,120,60,120,0,0

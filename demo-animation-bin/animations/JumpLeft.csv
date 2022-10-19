@@ -1,0 +1,11 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+JumpLeft,0,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FLIPX,FLIPY
+graphics/sprite_sheet.png,0,360,120,120,60,120,1,0
+graphics/sprite_sheet.png,120,360,120,120,60,120,1,0
+graphics/sprite_sheet.png,240,360,120,120,60,120,1,0
+graphics/sprite_sheet.png,360,360,120,120,60,120,1,0
+graphics/sprite_sheet.png,480,360,120,120,60,120,1,0
+graphics/sprite_sheet.png,600,360,120,120,60,120,1,0
+graphics/sprite_sheet.png,720,360,120,120,60,120,1,0

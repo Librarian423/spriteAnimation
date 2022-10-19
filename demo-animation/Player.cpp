@@ -1,15 +1,36 @@
 #include "Player.h"
 #include "ResourceMgr.h"
+#include <iostream>
 
 void Player::Init()
 {
-	sprite.setPosition(512.f / 2, 512.f / 2 + 60.f);
+	sprite.setPosition(1280.f / 2, 720.f / 2 + 60.f);
 	animator.SetTarget(&sprite);
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("Idle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("Move"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("Jump"));
 
+	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("IdleLeft"));
+	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("MoveLeft"));
+	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("JumpLeft"));
+
+	{
+		AnimationEvent ev;
+		ev.clipId = "Jump";
+		ev.frame = 6;
+		ev.onEvent = bind(&Player::OnCompleteJump, this);
+		animator.AddEvent(ev);
+	}
+	{
+		AnimationEvent ev;
+		ev.clipId = "JumpLeft";
+		ev.frame = 6;
+		ev.onEvent = bind(&Player::OnCompleteJump, this);
+		animator.AddEvent(ev);
+	}
+
+	SetState(States::Idle);
 	/*{
 		AnimationClip clip;
 		clip.id = "Idle";
@@ -49,6 +70,29 @@ void Player::Init()
 	}*/
 }
 
+void Player::SetState(States newState)
+{
+	if ( currState == newState )
+	{
+		return;
+	}
+
+	currState = newState;
+	
+	switch ( currState )
+	{
+	case Player::States::Idle:
+		animator.Play((lastDirection.x > 0.f) ? "Idle" : "IdleLeft");
+		break;
+	case Player::States::Move:
+		animator.Play((direction.x > 0.f) ? "Move" : "MoveLeft");
+		break;
+	case Player::States::Jump:
+		animator.Play((lastDirection.x > 0.f) ? "Jump" : "JumpLeft");
+		break;
+	}
+}
+
 void Player::UpdateInput(Event ev)
 {
 	switch ( ev.type )
@@ -56,36 +100,12 @@ void Player::UpdateInput(Event ev)
 	case Event::KeyPressed:
 		switch ( ev.key.code )
 		{
-		case Keyboard::Key::Num1:
-			animator.Play("Idle");
+		case Keyboard::Key::Space:
+			SetState(States::Jump);
 			break;
-		case Keyboard::Key::Num2:
-			animator.Play("Move");
-			break;
-		case Keyboard::Key::Num3:
-			animator.Play("Jump");
-			break;
-
-		case Keyboard::Key::Num4:
-			animator.PlayQueue("Idle");
-			break;
-		case Keyboard::Key::Num5:
-			animator.PlayQueue("Move");
-			break;
-		case Keyboard::Key::Num6:
-			animator.Play("Jump");
-			animator.PlayQueue("Move");
-			break;
-		case Keyboard::Key::Num7:
-			animator.SetSpeed(2.0);
-			break;
-		case Keyboard::Key::Num8:
-			animator.SetSpeed(1.0);
-			break;
+		
 		case Keyboard::Key::Num9:
 			animator.Stop();
-			break;
-		default:
 			break;
 		}
 		break;
@@ -94,10 +114,70 @@ void Player::UpdateInput(Event ev)
 
 void Player::Update(float dt)
 {
+	direction.x = 0.f;
+	direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
+	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
+
+	switch ( currState )
+	{
+	case Player::States::Idle:
+		UpdateIdle(dt);
+		break;
+	case Player::States::Move:
+		UpdateMove(dt);
+		break;
+	case Player::States::Jump:
+		UpdateJump(dt);
+		break;
+	}
+
 	animator.Update(dt);
+	if ( !EqualFloat(direction.x, 0.f) )
+	{
+		lastDirection = direction;
+	}
+	
 }
 
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(sprite);
+}
+
+void Player::OnCompleteJump()
+{
+	SetState(States::Idle);
+}
+
+void Player::UpdateIdle(float dt)
+{
+	
+	if ( !EqualFloat(direction.x, 0.f) )
+	{
+		SetState(States::Move);
+		return;
+	}
+	
+}
+
+void Player::UpdateMove(float dt)
+{
+	if ( EqualFloat(direction.x, 0.f) )
+	{
+		SetState(States::Idle);
+		return;
+	}
+	if ( !EqualFloat(direction.x, lastDirection.x) )
+	{
+		animator.Play((direction.x > 0.f) ? "Move" : "MoveLeft");
+	}
+}
+
+void Player::UpdateJump(float dt)
+{
+}
+
+bool Player::EqualFloat(float a, float b)
+{
+	return fabs(a - b) < numeric_limits<float>::epsilon();
 }

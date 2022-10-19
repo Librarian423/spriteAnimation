@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <functional>
 
 using namespace std;
 using namespace sf;
@@ -17,11 +18,11 @@ struct AnimationFrame
 	Texture* texture;
 	IntRect coord;
 	Vector2f origin;
+	bool flipX;
+	bool flipY;
 
-	AnimationFrame(Texture* t, const IntRect& c, const Vector2f& o)
-		:texture(t), coord(c), origin(o)
-	{
-	}
+	AnimationFrame(const vector<string>& row);
+
 };
 
 struct AnimationClip
@@ -32,3 +33,9 @@ struct AnimationClip
 	vector<AnimationFrame> frames;
 };
 
+struct AnimationEvent
+{
+	string clipId;		
+	int frame;
+	function<void()> onEvent;
+};

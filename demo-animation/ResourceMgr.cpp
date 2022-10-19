@@ -126,11 +126,7 @@ bool ResourceMgr::LoadAnimationClip(string id)
 
     for ( int i = 3; i < csv.GetRowCount(); i++ )
     {
-        auto rowFrame = csv.GetRow<string>(i);
-        auto tex = GetTexture(rowFrame[0]);
-        IntRect rect(stoi(rowFrame[1]), stoi(rowFrame[2]), stoi(rowFrame[3]), stoi(rowFrame[4]));
-        Vector2f origin(stof(rowFrame[5]), stof(rowFrame[6]));
-        clip->frames.push_back(AnimationFrame(tex, rect, origin));
+        clip->frames.push_back(csv.GetRow<string>(i));
     }
     animationClipMap.insert({ clip->id,clip });
     return true;

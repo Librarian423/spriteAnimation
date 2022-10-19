@@ -3,3 +3,6 @@ graphics/sprite_sheet.png,0
 animations/Idle.csv,3
 animations/Move.csv,3
 animations/Jump.csv,3
+animations/IdleLeft.csv,3
+animations/MoveLeft.csv,3
+animations/JumpLeft.csv,3

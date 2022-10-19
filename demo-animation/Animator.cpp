@@ -9,6 +9,16 @@ Animator::~Animator()
 {
 }
 
+void Animator::AddEvent(const AnimationEvent& ev)
+{
+	events.push_back(ev);
+}
+
+void Animator::ClearEvent()
+{
+	events.clear();
+}
+
 void Animator::AddClip(const AnimationClip& newClip)
 {
 	if ( clips.find(newClip.id) != clips.end() )
@@ -37,6 +47,9 @@ void Animator::Update(float dt)
 	}
 
 	accumTime = 0.f;
+
+	int prevFrame = currFrame;
+
 	++currFrame;
 
 	if ( currFrame == totalFrame )
@@ -62,6 +75,18 @@ void Animator::Update(float dt)
 	}
 
 	SetFrame(currClip->frames[currFrame]);
+
+	for ( auto& ev : events )
+	{
+		if ( ev.clipId != currClip->id || prevFrame == currFrame )
+		{
+			continue;
+		}
+		if ( ev.frame == currFrame && ev.onEvent != nullptr )
+		{
+			ev.onEvent();
+		}
+	}
 }
 
 int Animator::GetCurrentFrame() const
@@ -74,6 +99,11 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	target->setTexture(*frame.texture);
 	target->setTextureRect(frame.coord);
 	target->setOrigin(frame.origin);
+
+	Vector2f scale = target->getScale();
+	scale.x = abs(scale.x) * (frame.flipX ? -1 : 1);
+	scale.y = abs(scale.y) * (frame.flipY ? -1 : 1);
+	target->setScale(scale);
 }
 
 void Animator::Play(string id, bool clearQueue)

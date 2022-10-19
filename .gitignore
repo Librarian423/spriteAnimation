@@ -1,4 +1,5 @@
 *.exe
-sfml-template/.vs/*
-sfml-template/x64/*
+demo-animation/.vs/*
+demo-animation/.vs/v17/*
+demo-animation/x64/*
 *.pdb

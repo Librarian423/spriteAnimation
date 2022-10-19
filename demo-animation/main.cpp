@@ -7,7 +7,7 @@ int main()
     ResourceMgr::GetInstance()->LoadAll();
     Player player;
     player.Init();
-    sf::RenderWindow window(sf::VideoMode(512, 512), "Demo Animation");
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "Demo Animation");
 
     Clock clock;
     while (window.isOpen())

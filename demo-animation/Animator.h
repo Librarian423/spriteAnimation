@@ -2,11 +2,13 @@
 #include "AnimationClip.h"
 #include <map>
 #include <queue>
+#include <list>
 
 class Animator
 {
 protected:
 	map<string, AnimationClip> clips;
+	list<AnimationEvent> events;
 
 	Sprite* target;
 
@@ -25,6 +27,9 @@ public:
 	Animator();
 	~Animator();
 
+	void AddEvent(const AnimationEvent& ev);
+	void ClearEvent();
+
 	void AddClip(const AnimationClip& newClip);
 	void SetTarget(Sprite* t);
 	
@@ -40,7 +45,6 @@ public:
 	bool IsPlaying()const;
 	void ClearPlayQueue();
 	
-
 	float GetSpeed()const;
 	void SetSpeed(float s);
 };
